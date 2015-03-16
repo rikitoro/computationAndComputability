@@ -14,4 +14,30 @@ describe "numeric_operations" do
     Then { to_integer(DECREMENT[HUNDRED]) == 99 }
     Then { to_integer(DECREMENT[ZERO]) == 0 }
   end
+
+  describe "ADD" do
+    Then { to_integer(ADD[ZERO][ZERO]) == 0 }
+    Then { to_integer(ADD[ONE][ZERO]) == 1 }
+    Then { to_integer(ADD[THREE][FIVE]) == 8 }
+    Then { to_integer(ADD[HUNDRED][ONE]) == 101 }
+  end
+
+  describe "SUBTRACT" do
+    Then { to_integer(SUBTRACT[FIVE][ZERO]) == 5 }
+    Then { to_integer(SUBTRACT[FIVE][THREE]) == 2 }
+    Then { to_integer(SUBTRACT[FIVE][FIVE]) == 0 }
+    Then { to_integer(SUBTRACT[TWO][FIVE]) == 0 }
+  end
+
+  describe "MULTIPLY" do
+    Then { to_integer(MULTIPLY[TWO][ZERO]) == 0 }
+    Then { to_integer(MULTIPLY[ZERO][TWO]) == 0 }
+    Then { to_integer(MULTIPLY[TWO][TWO]) == 4 }
+    Then { to_integer(MULTIPLY[FIVE][THREE]) == 15 }
+  end
+
+  describe "POWER" do
+    Then { to_integer(POWER[TWO][ZERO]) == 1 }
+    Then { to_integer(POWER[TWO][THREE]) == 8 }
+  end
 end
