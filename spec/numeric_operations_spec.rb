@@ -47,4 +47,9 @@ describe "numeric_operations" do
     Then { to_boolean(IS_LESS_OR_EQUAL[TWO][TWO]) == true }
     Then { to_boolean(IS_LESS_OR_EQUAL[THREE][TWO]) == false}
   end
+
+  describe "MOD" do
+    Then { to_integer(MOD[THREE][TWO]) == 1 } 
+    Then { to_integer(MOD[POWER[THREE][THREE]][ADD[THREE][TWO]]) == 2 }
+  end
 end

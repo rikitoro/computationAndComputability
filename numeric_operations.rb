@@ -14,3 +14,12 @@ POWER     = -> m { -> n { n[MULTIPLY[m]][ONE] } }
 
 IS_LESS_OR_EQUAL = 
   -> m { -> n { IS_ZERO[SUBTRACT[m][n]] } }
+
+MOD =
+  -> m { -> n { 
+    IF[IS_LESS_OR_EQUAL[n][m]][
+      -> x { MOD[SUBTRACT[m][n]][n][x] }
+    ][
+      m
+    ]
+  } }
