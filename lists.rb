@@ -34,7 +34,11 @@ FOLD =
     } } }
   }]
 
-  
+MAP = 
+  -> k { -> f { 
+    FOLD[k][EMPTY][-> l { -> x { UNSHIFT[l][f[x]] } }]
+  } }
+
 def to_array(proc)
   array = []
 

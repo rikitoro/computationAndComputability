@@ -19,13 +19,19 @@ describe "lists" do
   Then { to_array(subject).map { |p| to_integer(p) } == [1, 2, 3] }
 end
 
-describe "range" do
+describe "RANGE" do
   subject(:subject) { RANGE[ONE][FIVE] }
   Then { to_array(subject).map { |p| to_integer(p) } == 
     [1, 2, 3, 4, 5] }
 end
 
-describe "fold" do
+describe "FOLD" do
   Then { to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][ADD]) == 15 }
   Then { to_integer(FOLD[RANGE[ONE][FIVE]][ONE][MULTIPLY]) == 120}  
+end
+
+describe "MAP" do
+  subject(:subject) { MAP[RANGE[ONE][FIVE]][INCREMENT] }
+  Then { to_array(subject).map { |p| to_integer(p) } ==
+    [2, 3, 4, 5, 6] }
 end
