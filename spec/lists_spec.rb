@@ -18,3 +18,9 @@ describe "lists" do
   Then { to_boolean(IS_EMPTY[EMPTY]) == true }
   Then { to_array(subject).map { |p| to_integer(p) } == [1, 2, 3] }
 end
+
+describe "range" do
+  subject(:subject) { RANGE[ONE][FIVE] }
+  Then { to_array(subject).map { |p| to_integer(p) } == 
+    [1, 2, 3, 4, 5] }
+end
