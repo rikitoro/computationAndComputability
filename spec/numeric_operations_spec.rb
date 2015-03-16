@@ -1,5 +1,6 @@
 require 'rspec/given'
 require_relative '../numeric_operations'
+require_relative '../booleans'
 
 describe "numeric_operations" do
   describe "INCREMENT" do
@@ -39,5 +40,11 @@ describe "numeric_operations" do
   describe "POWER" do
     Then { to_integer(POWER[TWO][ZERO]) == 1 }
     Then { to_integer(POWER[TWO][THREE]) == 8 }
+  end
+
+  describe "IS_LESS_OR_EQUAL" do
+    Then { to_boolean(IS_LESS_OR_EQUAL[ONE][TWO]) == true }
+    Then { to_boolean(IS_LESS_OR_EQUAL[TWO][TWO]) == true }
+    Then { to_boolean(IS_LESS_OR_EQUAL[THREE][TWO]) == false}
   end
 end
