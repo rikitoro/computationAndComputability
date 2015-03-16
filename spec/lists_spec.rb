@@ -24,3 +24,8 @@ describe "range" do
   Then { to_array(subject).map { |p| to_integer(p) } == 
     [1, 2, 3, 4, 5] }
 end
+
+describe "fold" do
+  Then { to_integer(FOLD[RANGE[ONE][FIVE]][ZERO][ADD]) == 15 }
+  Then { to_integer(FOLD[RANGE[ONE][FIVE]][ONE][MULTIPLY]) == 120}  
+end
