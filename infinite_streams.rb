@@ -1,3 +1,5 @@
 require_relative 'lists'
 
 ZEROS = Z[-> f { UNSHIFT[f][ZERO] }]
+
+UPWARDS_OF = Z[-> f { -> n { UNSHIFT[-> x { f[INCREMENT[n]][x] }][n] } }]
