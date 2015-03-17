@@ -39,12 +39,13 @@ MAP =
     FOLD[k][EMPTY][-> l { -> x { UNSHIFT[l][f[x]] } }]
   } }
 
-def to_array(proc)
+def to_array(proc, count = nil)
   array = []
 
-  until to_boolean(IS_EMPTY[proc])
+  until to_boolean(IS_EMPTY[proc]) || count == 0
     array.push(FIRST[proc])
     proc = REST[proc]
+    count = count - 1 unless count.nil?
   end
 
   array
