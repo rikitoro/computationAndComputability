@@ -18,13 +18,15 @@ IS_LESS_OR_EQUAL =
 
 Z = -> f { -> x { f[-> y { x[x][y] }] }[-> x { f[-> y { x[x][y] }] }] }
 
-MOD =
-  Z[-> f { -> m { -> n { 
-    IF[IS_LESS_OR_EQUAL[n][m]][
-      -> x {
-        f[SUBTRACT[m][n]][n][x]
-      }
-    ][
-      m
-    ]
-  } } }]
+
+
+MOD = 
+  -> m { -> n { 
+    m[-> x {
+      IF[IS_LESS_OR_EQUAL[n][x]][
+        SUBTRACT[x][n]
+      ][
+        x
+      ] 
+    }][m]
+  } }
