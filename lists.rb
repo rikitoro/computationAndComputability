@@ -8,6 +8,13 @@ IS_EMPTY  = LEFT
 FIRST     = -> l { LEFT[RIGHT[l]] }
 REST      = -> l { RIGHT[RIGHT[l]]}
 
+COUNTDOWN = -> p { PAIR[UNSHIFT[LEFT[p]][RIGHT[p]]][DECREMENT[RIGHT[p]]] }
+
+RANGE =
+  -> m { -> n {
+    LEFT[INCREMENT[SUBTRACT[n][m]][COUNTDOWN][PAIR[EMPTY][n]]]
+  } }
+=begin
 RANGE =
   Z[-> f { 
     -> m { -> n { 
@@ -20,6 +27,7 @@ RANGE =
       ]
     } } 
   }]
+=end
 
 FOLD =
   Z[-> f {
