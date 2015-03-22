@@ -6,6 +6,14 @@ class LCVariable < Struct.new(:name)
   def inspect
     to_s
   end
+
+  def replace(name, replacement)
+    if self.name == name
+      replacement
+    else
+      self
+    end
+  end
 end
 
 class LCFunction < Struct.new(:parameter, :body)
@@ -16,10 +24,27 @@ class LCFunction < Struct.new(:parameter, :body)
   def inspect
     to_s
   end
+
+  def replace(name, replacement)
+    if parameter == name
+      self
+    else
+      LCFunction.new(parameter, body.replace(name, replacement))
+    end
+  end
 end
 
 class LCCall < Struct.new(:left, :right)
   def to_s
     "#{left}[#{right}]"
+  end
+
+  def inspect
+    to_s
+  end
+
+  def replace(name, replacement)
+    LCCall.new(left.replace(name, replacement),
+      right.replace(name, replacement))
   end
 end
