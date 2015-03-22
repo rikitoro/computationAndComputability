@@ -128,3 +128,20 @@ describe "#replace" do
      end 
   end
 end
+
+describe "LCFunction#call" do
+  context "subject = -> x { -> y { x[y] } }" do
+    subject(:subject) { 
+      LCFunction.new(:x,
+        LCFunction.new(:y,
+          LCCall.new(LCVariable.new(:x), LCVariable.new(:y))
+        )
+      )
+    }
+
+    context "argument = -> z { z }" do
+      When(:argument) { LCFunction.new(:z, LCVariable.new(:z)) }
+      Then { subject.call(argument).inspect == '-> y { -> z { z }[y] }' }      
+    end
+  end
+end
