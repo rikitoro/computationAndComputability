@@ -14,6 +14,14 @@ class LCVariable < Struct.new(:name)
       self
     end
   end
+
+  def callable?
+    false
+  end
+
+  def reducible?
+    false
+  end
 end
 
 class LCFunction < Struct.new(:parameter, :body)
@@ -36,6 +44,14 @@ class LCFunction < Struct.new(:parameter, :body)
   def call(argument)
     body.replace(parameter, argument)
   end
+
+  def callable?
+    true
+  end
+
+  def reducible?
+    false
+  end
 end
 
 class LCCall < Struct.new(:left, :right)
@@ -50,5 +66,23 @@ class LCCall < Struct.new(:left, :right)
   def replace(name, replacement)
     LCCall.new(left.replace(name, replacement),
       right.replace(name, replacement))
+  end
+
+  def callable?
+    false
+  end
+
+  def reducible?
+    left.reducible? || right.reducible? || left.callable?
+  end
+
+  def reduce
+    if left.reducible?
+      LCCall.new(left.reduce, right)
+    elsif right.reducible?
+      LCCall.new(left, right.reduce)
+    else
+      left.call(right)
+    end
   end
 end

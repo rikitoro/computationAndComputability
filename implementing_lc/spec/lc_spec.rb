@@ -145,3 +145,62 @@ describe "LCFunction#call" do
     end
   end
 end
+
+describe "#reduce" do
+  Given(:one) { 
+    LCFunction.new(:p,
+      LCFunction.new(:x,
+        LCCall.new(LCVariable.new(:p), LCVariable.new(:x))
+      )
+    ) 
+  }
+  Given(:increment) { 
+    LCFunction.new(:n,
+      LCFunction.new(:p,
+        LCFunction.new(:x,
+          LCCall.new(
+            LCVariable.new(:p),
+            LCCall.new(
+              LCCall.new(LCVariable.new(:n), LCVariable.new(:p)),
+              LCVariable.new(:x)
+            )
+          )
+        )
+      )
+    ) 
+  }
+  Given(:add) { 
+    LCFunction.new(:m,
+      LCFunction.new(:n,
+        LCCall.new(
+          LCCall.new(LCVariable.new(:n), increment),
+          LCVariable.new(:m)
+        )
+      )
+    ) 
+  }
+  Given(:inc) { LCVariable.new("inc") }
+  Given(:zero) { LCVariable.new("zero") }
+
+  subject(:subject) { LCCall.new(LCCall.new(add, one), one) }
+
+  When(:reduced_expression) {
+    sut = subject
+    while sut.reducible?
+      sut = sut.reduce
+    end
+    sut
+  }
+  When(:called_expression) {
+    LCCall.new(LCCall.new(reduced_expression, inc), zero)    
+  }
+  When(:reduced_called_expression) {
+    sut = called_expression
+    while sut.reducible?
+      sut = sut.reduce
+    end
+    sut
+  }
+  Then { reduced_called_expression.inspect == "inc[inc[zero]]" }    
+  
+end
