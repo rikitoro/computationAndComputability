@@ -1,4 +1,4 @@
-requrie_relative 'fundamental'
+require_relative 'fundamental'
 
 def two
   increment(increment(zero))
