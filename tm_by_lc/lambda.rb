@@ -37,8 +37,7 @@ end
 
 ### predicates ###
 
-IS_ZERO = -> n { n[-> x { FALSE }][TRUE] }PAIR  = -> x { -> y { -> f { f[x][y] } } }
-
+IS_ZERO = -> n { n[-> x { FALSE }][TRUE] }
 
 ### PAIRS ###
 
