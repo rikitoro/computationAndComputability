@@ -46,3 +46,14 @@ end
 def six
   multiply(two, three)
 end
+
+
+###
+
+def easier_x(easier_x, easier_result)
+  easier_x
+end
+
+def decrement(x)
+  recurse(:zero, :easier_x, x)
+end
