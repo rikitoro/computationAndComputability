@@ -4,5 +4,6 @@ require_relative '../derivative'
 describe "derivative functions" do
   Then { two == 2 }
   Then { three == 3 }
-  Then { add_three(two) == 5}
+  Then { add_three(two) == 5 }
+  Then { add(two, three) == 5 }
 end
