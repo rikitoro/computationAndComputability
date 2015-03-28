@@ -1,6 +1,3 @@
-# reduce S[a][b][c] to a[c][b[c]], where a, b, and c can be any SKI calculus expressions
-# reduce K[a][b] to a
-# reduce I[a] to a
 
 class SKISymbol < Struct.new(:name)
   def to_s
@@ -26,3 +23,18 @@ class SKICombinator < SKISymbol
 end
 
 S, K, I = [:S, :K, :I].map { |name| SKICombinator.new(name) }
+
+# reduce S[a][b][c] to a[c][b[c]]
+def S.call(a, b, c)
+  SKICall.new(SKICall.new(a, c), SKICall.new(b, c))
+end
+
+# reduce K[a][b] to a
+def K.call(a, b)
+  a  
+end
+
+# reduce I[a] to a
+def I.call(a)
+  a
+end
