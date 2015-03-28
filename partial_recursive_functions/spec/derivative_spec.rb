@@ -9,4 +9,6 @@ describe "derivative functions" do
   Then { multiply(two, three) == 6 }
   Then { six == 6 }
   Then { decrement(six) == 5 }
+  Then { subtract(six, two) == 4 }
+  Then { subtract(two, six) == 0 }
 end

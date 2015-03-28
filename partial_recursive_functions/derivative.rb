@@ -57,3 +57,18 @@ end
 def decrement(x)
   recurse(:zero, :easier_x, x)
 end
+
+
+###
+
+def subtract_zero_from_x(x)
+  x
+end
+
+def decrement_easier_result(x, eaiser_y, easier_result)
+  decrement(easier_result)
+end
+
+def subtract(x, y)
+  recurse(:subtract_zero_from_x, :decrement_easier_result, x, y)
+end
