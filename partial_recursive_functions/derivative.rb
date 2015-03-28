@@ -72,3 +72,17 @@ end
 def subtract(x, y)
   recurse(:subtract_zero_from_x, :decrement_easier_result, x, y)
 end
+
+
+###
+
+def divide(x, y)
+  minimize { |n| subtract(increment(x), multiply(y, increment(n))) }
+end
+
+
+###
+
+def ten
+  increment(multiply(three, three))  
+end

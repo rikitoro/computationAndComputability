@@ -11,4 +11,6 @@ describe "derivative functions" do
   Then { decrement(six) == 5 }
   Then { subtract(six, two) == 4 }
   Then { subtract(two, six) == 0 }
+  Then { divide(six, two) == 3 }
+  Then { divide(ten, three) == 3 }
 end

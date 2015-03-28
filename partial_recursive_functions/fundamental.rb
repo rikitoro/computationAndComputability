@@ -19,3 +19,9 @@ def recurse(f, g, *values)
     send(g, *easier_values, easier_result)
   end
 end
+
+def minimize
+  n = 0
+  n = n + 1 until yield(n).zero?
+  n
+end
