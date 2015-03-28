@@ -6,4 +6,6 @@ describe "derivative functions" do
   Then { three == 3 }
   Then { add_three(two) == 5 }
   Then { add(two, three) == 5 }
+  Then { multiply(two, three) == 6 }
+  Then { six == 6 }
 end

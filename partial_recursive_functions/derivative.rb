@@ -25,3 +25,24 @@ end
 def add(x, y)
   recurse(:add_zero_to_x, :increment_easier_result, x, y)
 end
+
+###
+
+def multiply_x_by_zero(x)
+  zero
+end
+
+def add_x_to_easier_result(x, eaiser_y, easier_result)
+  add(x, easier_result)
+end
+
+def multiply(x, y)
+  recurse(:multiply_x_by_zero, :add_x_to_easier_result, x, y)
+end
+
+
+###
+
+def six
+  multiply(two, three)
+end
