@@ -28,3 +28,25 @@ describe "#combinator and #arguments" do
   When(:arguments) { subject.arguments }
   Then { combinator.call(*arguments).inspect == 'x[z][y[z]]' }
 end
+
+describe "#callable?" do
+  Given(:x) { SKISymbol.new(:x) }
+  Given(:y) { SKISymbol.new(:y) }
+  Given(:z) { SKISymbol.new(:z) }
+
+  context "x[y][z]" do
+    subject(:subject) { SKICall.new(SKICall.new(x, y), z) }
+    Then { subject.combinator.callable?(*subject.arguments) == false }
+  end
+
+  context "S[x][y]" do
+    subject(:subject) { SKICall.new(SKICall.new(S, x), y) }
+    Then { subject.combinator.callable?(*subject.arguments) == false }     
+  end
+
+  context "S[x][y][z]" do
+    subject(:subject) { SKICall.new(SKICall.new(SKICall.new(S, x), y), z) }
+    Then { subject.combinator.callable?(*subject.arguments) == true }     
+  end
+
+end
