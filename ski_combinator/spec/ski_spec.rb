@@ -17,5 +17,14 @@ describe SKICombinator do
   Given(:z) { SKISymbol.new(:z) }
   subject(:subject) { S.call(x, y, z) }
   Then { subject.inspect == 'x[z][y[z]]' }
+end
 
+describe "#combinator and #arguments" do
+  Given(:x) { SKISymbol.new(:x) }
+  Given(:y) { SKISymbol.new(:y) }
+  Given(:z) { SKISymbol.new(:z) }
+  subject(:subject) { SKICall.new(SKICall.new(SKICall.new(S, x), y), z) }
+  When(:combinator) { subject.combinator }
+  When(:arguments) { subject.arguments }
+  Then { combinator.call(*arguments).inspect == 'x[z][y[z]]' }
 end
