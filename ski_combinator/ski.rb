@@ -31,7 +31,10 @@ class SKISymbol < Struct.new(:name)
       SKICall.new(K, self)
     end
   end
-  
+
+  def to_iota
+    self
+  end  
 end
 
 class SKICall < Struct.new(:left, :right)
@@ -70,6 +73,10 @@ class SKICall < Struct.new(:left, :right)
     right_function = right.as_a_function_of(name)
     SKICall.new(SKICall.new(S, left_function), right_function)
   end
+
+  def to_iota
+    SKICall.new(left.to_iota, right.to_iota)
+  end
 end
 
 class SKICombinator < SKISymbol
@@ -104,5 +111,29 @@ def K.callable?(*arguments)
 end
 
 def I.callable?(*arguments)
+  arguments.length == 1
+end
+
+# to_iota to S, K, I
+def S.to_iota
+  SKICall.new(IOTA, SKICall.new(IOTA, SKICall.new(IOTA, SKICall.new(IOTA, IOTA))))
+end
+
+def K.to_iota
+  SKICall.new(IOTA, SKICall.new(IOTA, SKICall.new(IOTA, IOTA)))
+end
+
+def I.to_iota
+  SKICall.new(IOTA, IOTA)
+end
+### iota
+IOTA = SKICombinator.new('ι')
+
+# reduce ι[a] to a[S][K]
+def IOTA.call(a)
+  SKICall.new(SKICall.new(a, S), K)  
+end
+
+def IOTA.callable?(*arguments)
   arguments.length == 1
 end
