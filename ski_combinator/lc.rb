@@ -62,6 +62,7 @@ class LCFunction < Struct.new(:parameter, :body)
   def to_ski
     body.to_ski.as_a_function_of(parameter)
   end
+
 end
 
 class LCCall < Struct.new(:left, :right)
@@ -99,5 +100,6 @@ class LCCall < Struct.new(:left, :right)
   def to_ski
     SKICall.new(left.to_ski, right.to_ski)
   end
+
 
 end
