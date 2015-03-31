@@ -65,5 +65,49 @@ describe "swap operation" do
     }
     Then { reduced_expression.inspect == 'y[x]' }    
   end
+end
+
+describe "#as_a_function_of" do
+  Given(:x) { SKISymbol.new(:x) }
+  Given(:y) { SKISymbol.new(:y) }  
+
+  context "S[K][I] - as_a_function_of -> S[S[K[S]][K[K]]][K[I]]" do
+    Given(:original) { SKICall.new(SKICall.new(S, K), I) }
+    When(:function) { original.as_a_function_of(:x) }
+    Then { function.inspect == 'S[S[K[S]][K[K]]][K[I]]' }
+    Then { function.reducible? == false } 
+  end
+
+
+  context "S[K][I] - as_a_function_of -> expression; expression[y] ---> S[K][I] " do
+    Given(:original) { SKICall.new(SKICall.new(S, K), I) }
+    When(:function) { original.as_a_function_of(:x) }
+    When(:expression) { SKICall.new(function, y) }
+    When(:reduced_expression) {
+      expr = expression
+      while expr.reducible?
+        expr = expr.reduce
+      end
+      expr
+    }
+    Then { reduced_expression.inspect == 'S[K][I]' }
+    Then { reduced_expression == original }
+  end
+
+  context "S[x][I] - as_a_function_of -> expression; expression[y] ---> S[y][I]" do
+    Given(:original) { SKICall.new(SKICall.new(S, x), I) }
+    When(:function) { original.as_a_function_of(:x) }
+    When(:expression) { SKICall.new(function, y) }
+    When(:reduced_expression) {
+      expr = expression
+      while expr.reducible?
+        expr = expr.reduce
+      end
+      expr
+    }
+    Then { reduced_expression.inspect == 'S[y][I]' }
+    Then { reduced_expression != original }        
+  end
+
 
 end
