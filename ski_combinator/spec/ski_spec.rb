@@ -48,5 +48,22 @@ describe "#callable?" do
     subject(:subject) { SKICall.new(SKICall.new(SKICall.new(S, x), y), z) }
     Then { subject.combinator.callable?(*subject.arguments) == true }     
   end
+end
+
+describe "swap operation" do
+  Given(:x) { SKISymbol.new(:x) }
+  Given(:y) { SKISymbol.new(:y) }  
+  Given(:swap) { SKICall.new(SKICall.new(S, SKICall.new(K, SKICall.new(S,I))), K) }
+  Given(:expression) { SKICall.new(SKICall.new(swap, x), y) }
+  context "S[K[S[I]]][K][x][y] ---> y[x]" do
+    When(:reduced_expression) {
+      expr = expression
+      while expr.reducible?
+        expr = expr.reduce
+      end
+      expr
+    }
+    Then { reduced_expression.inspect == 'y[x]' }    
+  end
 
 end
