@@ -32,4 +32,24 @@ describe TagSystem do
     Then { subject.current_string == 'eeffffffffff' }    
   end
 
+  context "tests whether a number is odd or even" do
+    Given(:rulebook) { TagRulebook.new(2, [
+      TagRule.new('a', 'cc'), TagRule.new('b', 'd'),
+      TagRule.new('c', 'eo'), TagRule.new('d', ''),
+      TagRule.new('e', 'e')]) }
+    subject(:subject) { TagSystem.new(number_string, rulebook) }
+
+    context "when the input represents an even number" do
+      When(:number_string) { 'aabbbbbbbb' }
+      When { subject.run }
+      Then { subject.current_string == 'e' }
+    end
+
+    context "when the input represents an odd number" do
+      When(:number_string) { 'aabbbbbbbbbb' }
+      When { subject.run }
+      Then { subject.current_string == 'o' }
+    end
+  end
+
 end
