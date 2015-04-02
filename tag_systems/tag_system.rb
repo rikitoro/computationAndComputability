@@ -16,10 +16,18 @@ class TagRulebook < Struct.new(:deletion_number, :rules)
   def rule_for(string)
     rules.detect { |r| r.applies_to?(string) }
   end
+
+  def applies_to?(string)
+    !rule_for(string).nil? && string.length >= deletion_number
+  end
 end
 
 class TagSystem < Struct.new(:current_string, :rulebook)
   def step
     self.current_string = rulebook.next_string(current_string)
+  end
+
+  def run
+    step while rulebook.applies_to?(current_string)
   end
 end
