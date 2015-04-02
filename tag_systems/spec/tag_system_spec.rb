@@ -16,4 +16,20 @@ describe TagSystem do
     Then { subject.current_string == 'ccdddddddddddd' }
   end
 
+  context "increments the number 2(aabbbb) to 3(ccdddddd)" do
+    Given(:rulebook) { TagRulebook.new(2, [TagRule.new('a', 'ccdd'), TagRule.new('b', 'dd')]) }
+    subject(:subject) { TagSystem.new('aabbbb', rulebook) }
+    When { subject.run }
+    Then { subject.current_string == 'ccdddddd' }    
+  end
+
+  context "double the number 2(aabbbb) to 4(ccdddddddd), and increments it to 5(eeffffffffff)" do
+    Given(:rulebook) { TagRulebook.new(2, [
+      TagRule.new('a', 'cc'), TagRule.new('b', 'dddd'),
+      TagRule.new('c', 'eeff'), TagRule.new('d', 'ff')]) }
+    subject(:subject) { TagSystem.new('aabbbb', rulebook) }
+    When { subject.run }
+    Then { subject.current_string == 'eeffffffffff' }    
+  end
+
 end
