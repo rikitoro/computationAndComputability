@@ -18,5 +18,10 @@ describe "cyclic tag system" do
     Then { subject.current_string == '101' }    
   end
 
+end
 
+describe "#alphabet" do
+  Given(:rulebook) { TagRulebook.new(2, [TagRule.new('a', 'ccdd'), TagRule.new('b', 'dd')]) }
+  Given(:system) { TagSystem.new('aabbbb', rulebook) }
+  Then { system.alphabet == ['a', 'b', 'c', 'd'] }  
 end
