@@ -81,4 +81,20 @@ class TagSystem < Struct.new(:current_string, :rulebook)
   def alphabet
     (rulebook.alphabet + current_string.chars.entries).uniq.sort
   end
+
+  def encoder
+    CyclicTagEncoder.new(alphabet)
+  end
+end
+
+
+class CyclicTagEncoder < Struct.new(:alphabet)
+  def encode_string(string)
+    string.chars.map { |character| encode_character(character) }.join
+  end
+
+  def encode_character(character)
+    character_position = alphabet.index(character)
+    (0..alphabet.length - 1).map { |n| n == character_position ? '1' : '0' }.join    
+  end
 end
