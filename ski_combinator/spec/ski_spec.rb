@@ -109,5 +109,8 @@ describe "#as_a_function_of" do
     Then { reduced_expression != original }        
   end
 
+  context "description" do
+    
+  end
 
 end
